@@ -1,0 +1,50 @@
+<template>
+    <ui-view style="width:100%">
+        <ui-view style="width:100%;height:40px;line-height:40px;padding:0 0.4rem;position:fixed;display:flex;flex-wrap:nowrap;justify-content:space-between;background:#ffffce">
+            <ui-view>
+                <ui-icon type="shipin"></ui-icon>
+                <ui-text style="font-size:10px;">贵族/守护/粉丝可上座</ui-text>
+            </ui-view>
+            <ui-view>
+                <ui-text style="font-size:10px;">开通贵族</ui-text>
+                <ui-icon type="jiantouyou" size="12"></ui-icon>
+            </ui-view>
+        </ui-view>
+        <ui-view style="padding:40px 0.4rem">
+            <ui-view style="height:70px;display:flex;border-bottom:1px solid #c9c9c9" ui:for="{{nocjzcotems}}" ui:for-item="item" ui:for-index="{{item.id}}" >
+                <ui-view style="width:60px;line-height:70px;padding-left:5px">
+                    <ui-icon type="yonghu" size="40"></ui-icon>
+                </ui-view>
+                <ui-view style="margin-top:15px">
+                    <ui-view style="">{{item.title}}</ui-view>
+                    <ui-view style="font-size:10px">粉丝:{{item.funsNum}}</ui-view>
+                </ui-view>
+            </ui-view>
+        </ui-view>
+    </ui-view>
+  
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+            nocjzcotems:[
+                { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1, funsNum: 45964631},
+                { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2, funsNum: 7516131},
+                { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3, funsNum: 133964},
+                { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4, funsNum: 15998731},
+                { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:5, funsNum: 174813116},
+                { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:6, funsNum: 7898916131},
+                { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:7, funsNum: 132155},
+                { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:8, funsNum: 89413155},
+            ],
+        }
+    }
+    
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>

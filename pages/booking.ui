@@ -1,0 +1,179 @@
+<template>
+  <ui-page style="top:0">
+      <ui-fixed-view top="0" left="0" style="width:100%">
+        <ui-view class="fixed-view-content" style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem;background:#eeeeee">
+          <ui-icon type="sousuo" size="19" bindtap="showFullScreenSearch"></ui-icon>
+          <ui-view style="width:120px;margin:0 auto">
+            <ui-tabs auto-width="{{false}}" index="{{ current4 }}"  bindchange="handleChangeBadge($event, 'current4')">
+              <ui-tab>
+                <ui-view>直播</ui-view>
+              </ui-tab>
+              <ui-tab>
+                <ui-view>订阅
+                    <ui-badge custom-style="padding: 4px;top:-8px;left:-3px" ui:if="showBadge3"></ui-badge>
+                </ui-view>
+              </ui-tab>
+            </ui-tabs>
+          </ui-view>
+          <ui-icon type="tianjiayonghu" bindtap="goManageBooking" size="19"></ui-icon>
+        </ui-view>
+      </ui-fixed-view>
+
+      <ui-swiper class="content" current="{{ current4 }}" bindchange="handleContentChange($event, 'current4')" style="padding-top:50px;">
+        <ui-swiper-item>
+          <ui-view style="padding:10px 0.4rem;">
+            <ui-view style="display:flex;flex-wrap:nowrap;justify-content:space-between;padding-bottom:4px;">
+              <ui-view>
+                <ui-icon type="shipin"></ui-icon>
+                <ui-text>正在直播 ( {{ cjzcotems.length}} )</ui-text>
+              </ui-view>
+              <ui-view>
+                <ui-icon type="leimu" size="14"></ui-icon>
+                <ui-text style="font-size:10px;">最近爱看<ui-text>
+              </ui-view>
+            </ui-view>
+            <ui-view style="display:flex; flex-wrap:wrap;justify-content: space-between;width:100%"> 
+              <ui-view ui:for="{{cjzcotems}}" ui:for-item="item" ui:for-index="{{item.id}}" bindtap="goexstudio(item.id)" style="width: 49%;padding-bottom:10px">
+                <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px;width:100%"></ui-image>
+                <ui-text style="font-size:10px">{{ item.title }}</ui-text>
+              </ui-view> 
+            </ui-view>
+          </ui-view>
+          <ui-button bindtap="makeRequest" type="primary">订阅主页测试ajax</ui-button>
+          <ui-view style="width:100%;position:relative;text-align:center;background:#ede9d6;padding:10px 0">
+            <ui-view style="position:absolute;right:0.4rem;top:10px">
+              <ui-icon type="gengduo"></ui-icon>
+            </ui-view>
+            <ui-view style="height:30px;line-height:30px">你错过了很多精彩直播</ui-view>
+            <ui-view style="height:30px;line-height:20px;font-size:10px;">打开通知权限,开播第一时间通知你</ui-view>
+            <ui-view>
+              <ui-button style="width:110px;padding:0;margin:0;height:30px;line-height:28px;border:1px solid orange;color:orange;border-radius:5px;">打开通知</ui-button>
+            </ui-view>
+          </ui-view>
+          <ui-view style="padding:15px 0.4rem;">
+            <ui-view style="display:flex;flex-wrap:nowrap;justify-content:space-between;padding-bottom:5px">
+              <ui-view>
+                <ui-icon type="shipin"></ui-icon>
+                <ui-text>暂未开播 ( {{ nocjzcotems.length}} )</ui-text>
+              </ui-view>
+              <ui-view>
+                <ui-icon type="leimu" size="14"></ui-icon>
+                <ui-text style="font-size:10px;">粉丝数量</ui-text>
+              </ui-view>
+            </ui-view>
+            <ui-view class="top_tip" ui:for="{{nocjzcotems}}" ui:for-item="item" ui:for-index="{{item.id}}" >
+              <ui-row height="80" border-bottom>
+                <ui-col width="80" align="center" vertical-align="middle">
+                  <ui-view class="left_icon left_icon1">
+                    <ui-icon type="yonghu" size="50"></ui-icon>
+                  </ui-view>
+                </ui-col>
+                <ui-col class="text" align="left" vertical-align="middle" space="20">
+                  <ui-view style="width: 100%;">
+                    <ui-row height="30">
+                      <ui-col align="left" vertical-align="middle">
+                        <ui-text>{{item.title}}</ui-text>
+                      </ui-col>
+                    </ui-row>
+                    <ui-view style="font-size:10px;">粉丝: {{item.funsNum}}</ui-view>
+                  </ui-view>
+                </ui-col>
+              </ui-row>
+            </ui-view>
+          </ui-view>
+        </ui-swiper-item>
+        <ui-swiper-item style="background:yellow;font-size:60px;">
+          如果导航栏消失, 请尝试刷新页面
+        </ui-swiper-item>
+      </ui-swiper>
+      
+  </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+     "navigationStyle": "custom"
+  },
+  data () {
+    return {
+      current4:0,
+      
+      showBadge3:true,
+      tabStyle:{
+        'flex':'0 0 40px'
+      },
+      index:0,
+      cjzcotems:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1, funsNum: 98989 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2, funsNum: 15633115 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3, funsNum: 145613 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4, funsNum: 1532158 },
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:5, funsNum: 8553153 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:6, funsNum: 89913 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:7, funsNum: 15631596 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:8, funsNum: 159875416 },
+      ],
+      nocjzcotems:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1, funsNum: 45964631},
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2, funsNum: 7516131},
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3, funsNum: 133964},
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4, funsNum: 15998731},
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:5, funsNum: 174813116},
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:6, funsNum: 7898916131},
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:7, funsNum: 132155},
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:8, funsNum: 89413155},
+      ],
+    }
+  },
+  mounted () {},
+  methods: {
+    showFullScreenSearch(){
+      ui.navigateTo({
+        url: '/component/page/fullscreensearch'
+      })
+    },
+    makeRequest(){
+      ui.request({
+        url: 'booking/ajaxTest',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    },
+    goexstudio(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+        
+      })
+    },
+    goManageBooking(){
+      ui.navigateTo({
+        url: '/component/booking/managebooking'
+      })
+    },
+    handleContentChange (index, key) {
+      this[key] = index
+    },
+    handleChangeBadge(index, key){
+      this[key] = index
+      if(key === 1){
+        this.showBadge3 = false
+      }
+    },
+  }
+}
+</script>
+
+<style lang="less" scoped>
+
+
+  
+</style>

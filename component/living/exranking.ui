@@ -1,0 +1,124 @@
+<template>
+  <ui-view>
+    <ui-view style="width:100%;position:fixed">
+      <ui-view style="width:80%;height:30px;margin:7px auto;border-radius:3px;display:flex;overflow:hidden;border:1px solid #c9c9c9">
+        <ui-text :class="{'active':Flag}" bindtap="changeFlag" style="width:50%;line-height:30px;text-align:center">周贡榜</ui-text>
+        <ui-text :class="{'active':!Flag}" bindtap="changeFlag" style="width:50%;line-height:30px;text-align:center">粉丝榜</ui-text>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="padding-top:45px">
+      <!-- 周贡榜 -->
+      <ui-view :class="[Flag? 'show':'hidden']" style="padding:5px 0.4rem;font-size:12px">
+          <ui-view ui:for="{{nocjzcotems}}" ui:for-item="item" ui:for-index="{{item.id}}" style="display:flex;padding:10px 0;justify-content:space-between;border-bottom:1px solid #efefef">
+              <ui-view style="display:flex;">
+                  <ui-view style="border-radius:3px;background:red;width:18px;text-align:center;color:#fff">{{index+1}}</ui-view>
+                  <ui-view style="margin-left:7px;">{{item.title}}</ui-view>
+              </ui-view>
+              <ui-view>{{item.funsNum}}</ui-view>
+          </ui-view>
+      </ui-view>
+      
+        <!-- 粉丝榜 -->
+      <ui-view :class="[Flag? 'hidden':'show']" style="padding:5px 0.4rem;font-size:12px">
+          <ui-view ui:for="{{cjzcotems}}" ui:for-item="item" ui:for-index="{{item.id}}" style="display:flex;padding:10px 0;justify-content:space-between;border-bottom:1px solid #efefef">
+              <ui-view style="display:flex;">
+                  <ui-view style="border-radius:3px;background:red;width:18px;text-align:center;color:#fff">{{index+1}}</ui-view>
+                  <ui-view style="margin-left:7px;">{{item.title}}</ui-view>
+              </ui-view>
+              <ui-view>{{item.funsNum}}</ui-view>
+          </ui-view>
+      </ui-view>
+    </ui-view>
+    <ui-button bindtap="makeRequest" type="primary">订阅页面测试ajax</ui-button>
+  </ui-view>
+</template>
+
+<script>
+
+
+export default {
+  config: {
+     "navigationStyle": "custom"
+  },
+  data () {
+    return {
+      Flag:true,
+      index:0,
+      cjzcotems:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1, funsNum: 98989 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2, funsNum: 15633115 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3, funsNum: 145613 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4, funsNum: 1532158 },
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:5, funsNum: 8553153 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:6, funsNum: 89913 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:7, funsNum: 15631596 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:8, funsNum: 159875416 },
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:9, funsNum: 8553153 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:10, funsNum: 89913 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:11, funsNum: 15631596 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:12, funsNum: 159875416 },
+      ],
+      nocjzcotems:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1, funsNum: 45964631},
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2, funsNum: 7516131},
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3, funsNum: 133964},
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4, funsNum: 15998731},
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:5, funsNum: 174813116},
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:6, funsNum: 7898916131},
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:7, funsNum: 132155},
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:8, funsNum: 89413155},
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:9, funsNum: 8553153 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:10, funsNum: 89913 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:11, funsNum: 15631596 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:12, funsNum: 159875416 },
+      ],
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    showFullScreenSearch(){
+      ui.navigateTo({
+        url: '/component/page/fullscreensearch'
+      })
+    },
+    makeRequest(){
+      ui.request({
+        url: 'booking/ajaxTest',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    },
+    changeFlag(){
+      this.Flag = !this.Flag
+
+    },
+  }
+}
+</script>
+
+<style lang="less" scoped>
+
+.active{
+  background:#c9c9c9;
+  color:orange;
+}
+.show{
+  display:block;
+  font-size: 16px;
+}
+.hidden{
+  display: none;
+}
+
+  
+</style>

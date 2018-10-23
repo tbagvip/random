@@ -1,0 +1,292 @@
+<!--undefined-->
+<template>
+  <ui-view style="width:100%">
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem;position:fixed;background:#fff">
+      <ui-icon type="fanhui" bindtap="goback"></ui-icon>
+      <ui-text>我的信息</ui-text>
+      <ui-button :disable="isLogin? false:true" style="font-size:12px;margin:0;padding:0;border:none;background:#fff" bindtap="deleteuser" size="mini">賬號註銷</ui-button>
+    </ui-view>
+
+    <ui-view style="height:60px;background:#f2f2f2;"></ui-view>
+
+    <ui-view bindtap="changeavatar" style="height:65px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>头像</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-image src="static/img/huyalogo.jpg" style="height:50px;width:50px;border-radius:50%;margin-right:5px;"  mode="simple"></ui-image>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="border-top:1px solid #f2f2f2;border-bottom:1px solid #f2f2f2;height:47px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>昵称</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">{{userName}}</ui-text>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>YY号</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">{{account}}</ui-text>
+      </ui-view>
+    </ui-view>
+
+    <!-- 性别 -->
+    <ui-view style="border-top:1px solid #f2f2f2;border-bottom:1px solid #f2f2f2;height:47px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>性别</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">{{gender}}</ui-text>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <!-- 生日 -->
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view style="width:100%">
+        <ui-picker mode="date" start="2000-09-01" end="2018-10-30" value="{{ dataValue }}" date-format="YYYY年MM月DD日" bindchange="handleChange" style="font-size:14px"></ui-picker>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">{{birdthday}}</ui-text>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+    
+    <!-- 地区 -->
+    <ui-view style="border-top:1px solid #f2f2f2;border-bottom:1px solid #f2f2f2;height:47px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>地区</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">{{address}}</ui-text>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <!-- 签名 -->
+    <ui-view bindtap="changesignature" style="height:45px;background:pink;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>签名</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">{{signature}}</ui-text>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:15px;background:#f2f2f2;"></ui-view>
+      
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>我的等级</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">{{rank}}</ui-text>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:15px;background:#f2f2f2;"></ui-view>
+
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>我的财产</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-text style="margin-right:5px;">金银豆/收支明细/我的奖品</ui-text>
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:15px;background:#f2f2f2;"></ui-view>
+
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>我的视频</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:15px;background:#f2f2f2;"></ui-view>
+
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem">
+      <ui-view>
+        <ui-text>绑定/修改手机</ui-text>
+      </ui-view>
+      <ui-view style="display:flex;align-items:center">
+        <ui-icon type="jiantouyou"></ui-icon>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:15px;background:#f2f2f2;"></ui-view>
+
+    <ui-view style="padding:10px 0.4rem">
+      <ui-button :disable="isLogin? false:true"  bindtap="quit">退出登錄</ui-button>
+    </ui-view>
+    <ui-popup ui:model="{{ showchangeavatar }}" background="transparent">
+      <ui-view style="background:#fff;width:100%;height:80px;display:flex;justify-content:space-around;align-items:center">
+        <ui-view bindtap="handleShow('showchangeavatar')" style="width:50%;text-align:center">
+          <ui-icon type="baoxiang" size="30" color="#ff8e1e"></ui-icon>
+          <ui-view>拍照</ui-view>
+        </ui-view>
+        <ui-view bindtap="handleShow('showchangeavatar')" style="width:50%;text-align:center">
+          <ui-icon type="baoxiang" size="30" color="#2086e1"></ui-icon>
+          <ui-view>从相册选</ui-view>
+        </ui-view>
+      </ui-view>
+    </ui-popup>
+  </ui-view>
+</template>
+
+<script>
+const getDoubleNumber = function (num) {
+  return num < 10 ? '0' + num : '' + num
+}
+export default {
+  config: {
+    "navigationStyle": "custom",
+    "backgroundColor": "#fff",
+  },
+  data() {
+    return {
+      isLogin:false,
+      account:'',
+      userName:'',
+      age:'',
+      money:'',
+      address:'',
+      avatar:'',
+      rank:'',
+      signature:'',
+      video:'',
+      gender:'',
+      showchangeavatar: false,
+      dataValue: '2017-09-05',
+    }
+  },
+  methods: {
+    goback(){
+      ui.navigateBack()
+    },
+    deleteuser(){
+      var self = this
+      ui.request({
+        url: '/deleteuser/',
+        data:{},
+        success: function (res) {
+          if(res.data['status']===1){
+            var startNum = 4
+            self.isLogin = false
+            var timer = setInterval(function(){
+              startNum--
+              ui.showToast({ title: "賬戶註銷成功,"+startNum+"秒后返回个人主页", icon: 'success', duration: 1000 })
+              if(startNum<1){
+                clearInterval(timer)
+                ui.switchTab({
+                  url: '/pages/user'
+                })
+              }
+            },1000)
+          }
+          if(res.data['status']===0){
+            ui.showToast({ title: "賬戶註銷失敗, 一會再試", duration: 2000 })
+          }
+        },
+        fail: function ({ errMsg }) {
+          ui.showToast({ title: "服務器忙, 稍後再試", duration: 2000 })
+        }
+      })
+    },
+    handleShow (key) {
+      this[key] = false
+    },
+    changeavatar () {
+      this.showchangeavatar = true
+    },
+    getUserData(){
+      var self = this
+      ui.request({
+        url: '/userInfoSession/',
+        data:{},
+        success: function (res) {
+          // 如果session中存在个人信息, 那么用户名=res.data['data'][0]， isLogin的值设置为True
+          if(res.data['status']===1){
+            self.isLogin = true
+            self.userName = res.data['data']["昵称"]
+            self.money = res.data['data']["金钱"]
+            self.account=res.data['data']["账号"]
+            self.age=res.data['data']["年龄"]
+            self.address=res.data['data']["地址"]
+            self.avatar=res.data['data']["头像"]
+            self.rank=res.data['data']["等级"]
+            self.signature=res.data['data']["签名"]
+            self.video=""
+            self.gender=res.data['data']["性别"]
+          }
+          // 如果session中不存在个人信息, isLogin的值设置为false
+          if(res.data['status']===0){
+            self.isLogin = false
+            ui.navigateTo({
+              url: '/component/mine/login'
+            })
+          }
+        },
+        fail: function ({ errMsg }) {
+          var startNum = 4;
+          var timer = setInterval(function(){
+            startNum--
+            ui.showToast({ title:"獲取個人信息失敗"+startNum+"秒后返回个人主页",duration: 1000 })
+            if(startNum<1){
+              clearInterval(timer)
+              ui.switchTab({
+                url: '/pages/user'
+              })
+            }
+          },1000)
+        }
+      })
+    },
+    quit(){
+      ui.request({
+        url: '/quit/',
+        data:{},
+        success: function (res) {
+          if(res.data['status']===1){
+            ui.showToast({ title: "您已退出登錄", icon: 'success', duration: 1000 })
+            ui.navigateTo({
+              url: '/pages/user'
+            })
+          }
+        }
+      })
+    },
+    handleChange (val) {
+      this.dataValue = val
+    },
+    changesignature(){
+       ui.navigateTo({
+          url: '/component/mine/changesignature'
+      })
+    }
+  },
+  mounted() {
+    this.getUserData()
+  },
+}
+</script>
+
+<style lang="less">
+  .weui-cell{
+    padding:0;
+  }
+</style>

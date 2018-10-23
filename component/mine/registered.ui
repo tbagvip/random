@@ -1,0 +1,142 @@
+<!--undefined-->
+<template>
+  <ui-page>
+    <ui-view>
+      <ui-form style="padding:0 0.4rem;" bindsubmit="formSubmit">
+        <ui-view style="height:45px;line-height:45px;display:flex;justify-content:space-between;border-bottom:1px solid red">
+          <ui-view> 国家\地区</ui-view>
+          <ui-view style="display:flex;justify-content:space-between">
+            <ui-text  bindtap="openPopup" name="Country" value="{{Country}}">{{Country}}</ui-text>
+            <ui-icon type="jiantouyou" size="14"></ui-icon>
+          </ui-view>
+        </ui-view>
+        <ui-view style="display:flex;border-bottom:1px solid red;height:45px;line-height:45px;">
+          <ui-icon type="shouji" size="22"></ui-icon>
+          <ui-input name="telvalue" type="tel" ui:model="{{telvalue}}" style="border:none;padding:0;margin:6px 2px;overflow:hidden;"
+                          bindfocus="handleFocus" bindblur="handleBlur" :placeholder="isClear? '':'请输入手机号码' " maxlength="11"></ui-input>
+        </ui-view>
+        <ui-view style="display:flex;border-bottom:1px solid red;height:45px;line-height:45px;">
+          <ui-icon type="yanzhengma" size="22"></ui-icon>
+          <ui-input bindfocus="handleFocus1" bindblur="handleBlur1" style="border:none;padding:0;margin:6px 2px;overflow:hidden;" name="codevalue" ui:model="{{codevalue}}"
+                          :disabled="!(/^1[34578]\d{9}$/.test(this.telvalue))? true:false" :placeholder="isClear1? '':'请输入验证码' " maxlength="4"></ui-input>
+          <ui-button bindtap="getverifycode" :disabled="!(/^1[34578]\d{9}$/.test(this.telvalue))? true:false" type="primary" size="mini">获取验证码</ui-button>
+        </ui-view>
+
+         <!-- 验证码图片 -->
+         <ui-view style="display:flex;align-items:center;height:36px;background:pink">
+          <ui-image src="/verifycode/"></ui-image>
+          <ui-text style="margin-left:10px" bindtap="getverifycode">换一张</ui-text>
+         </ui-view>
+
+        <ui-button form-type="submit" type="primary" style="margin:20px auto;background:##f2a63a;color:#fff"
+                          :disabled="(!(/^1[34578]\d{9}$/.test(this.telvalue)))||(this.codevaluelength!=4)? true:false" >下 一 步</ui-button>
+      <ui-form>
+      <ui-button bindtap="goLogin" class="show1">返 回 登 录 页</ui-button>
+      <ui-popup ui:model="{{ show }}" position="bottom" height="{{height}}"  bindtap="handleShow('show')"></ui-popup>
+    </ui-view>
+  </ui-page>
+</template>
+
+<script>
+
+export default {
+  components:{
+  },
+  config: {
+    navigationBarTitleText: "手机号码注册",
+  },
+  data() {
+    return {
+      show: false,
+      isClear: false,
+      isClear1: false,
+      telvalue: '',
+      codevalue: '',
+      codevaluelength: 0,
+      Country: '中国 +86',
+      height: ui.DEFAULT_CONTENT_HEIGHT,
+    }
+  },
+  methods: {
+    handleShow (key) {
+      this[key] = false
+    },
+    openPopup () {
+      this.show = true
+    },
+    handleFocus(){
+      this.isClear = true
+    },
+    handleFocus1(){
+      this.isClear1 = true
+    },
+    handleBlur(){
+      if(!(/^1[34578]\d{9}$/.test(this.telvalue))){
+        this.telvalue = ''
+        this.isClear=false
+        ui.showToast({ title: '输入的手机号不合法,请重新输入', duration: 2000 })
+      }
+    },
+    handleBlur1(){
+      if(this.codevaluelength != 4){
+        this.isClear1 = false
+      }
+    },
+    getverifycode(){
+      ui.navigateTo({
+        url: '/component/mine/registered'
+      })
+    },
+    goLogin(){
+      ui.navigateTo({
+        url: '/component/mine/login'
+      })
+    },
+    formSubmit (e) {
+      ui.request({
+        url: '/checkedtelvalue/',
+        method: 'POST',
+        data: e,
+        header: { 'content-type': "application/x-www-form-urlencoded" },
+        success: function (res) {
+          switch (res.data["status"]) {
+            case -1:
+              ui.showToast({ title: "手机号已存在",duration: 3000 })
+              break;
+            case 0:
+               ui.showToast({ title: "验证码错误",duration: 3000 })
+               break;
+            case 1:
+              ui.navigateTo({
+                url: '/component/mine/nextstip',
+              })
+              break;
+          }
+        },
+        error: function (res) {
+          console.log('错误信息'+res.data)
+        }
+      })
+    },
+  },
+  mounted() {
+  },
+  watch:{
+    codevalue:function(){
+      this.codevaluelength = this.codevalue.replace(/\s/g, "").length;
+      return this.codevaluelength;
+    }
+  }
+}
+</script>
+
+
+<style lang="less" scoped>
+.show1{
+  display: block;
+  border: 1px solid #49db42;
+  background: #49db42;
+  color:#fff;
+}
+
+</style>

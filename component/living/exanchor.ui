@@ -1,0 +1,18 @@
+<template>
+    <ui-view style="height:100%;background:pink">
+        <ui-view style="font-size:160px">主播</ui-view>   
+        <ui-view style="font-size:160px">主播</ui-view>   
+        <ui-view style="font-size:160px">主播</ui-view>   
+        <ui-view style="font-size:160px">主播</ui-view>   
+    </ui-view>   
+</template>
+
+<script>
+export default {
+    
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>

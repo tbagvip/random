@@ -1,0 +1,117 @@
+<!--undefined-->
+<template>
+  <ui-view>
+      <!-- 全屏搜索 -->
+      <Exfullsearch></Exfullsearch>
+      <!-- 顶部轮播 -->
+      <Exswiper></Exswiper>
+      <!-- 全部直播 -->
+      <ui-view style="padding:5px 0.4rem">
+        <ui-view bindtap="goqbzb" style="width:30%">
+          <ui-text style="font-size:14px;color:blue;">全部直播</ui-text>
+          <ui-icon type="jiantouyou" color="blue" size="12"></ui-icon>
+        </ui-view>
+        <ui-view style="display:flex; flex-wrap:wrap;justify-content: space-between;"> 
+          <ui-view ui:for="{{allliving}}" ui:for-item="item" ui:for-index="{{item.id}}" bindtap="goexstudio(item.id)" style="padding:5px 0; width: 49%;">
+            <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px"></ui-image>
+            <ui-text style="font-size:10px">{{ item.title }}</ui-text>
+          </ui-view> 
+        </ui-view>
+      </ui-view>
+      <!-- 滚动公告 -->
+      <Exrollerup></Exrollerup>
+      <!-- 刺激战场 -->
+      <ui-view style="padding:5px 0.4rem">
+        <ui-view bindtap="gocjzc" style="width:30%">
+          <ui-text style="font-size:14px;color:blue">刺激战场</ui-text>
+          <ui-icon type="jiantouyou" color="blue" size="12"></ui-icon>
+        </ui-view>
+        <ui-view style="display:flex; flex-wrap:wrap;justify-content: space-between;"> 
+          <ui-view ui:for="{{cjzcotems}}" ui:for-item="item" ui:for-index="{{item.id}}" bindtap="goexstudio(item.id)" style="padding:5px 0; width: 49%;">
+            <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px"></ui-image>
+            <ui-text style="font-size:10px;">{{ item.title }}</ui-text>
+          </ui-view> 
+        </ui-view>
+      </ui-view>
+      <Exswiperplus></Exswiperplus>
+      <!-- 王者 -->
+      <ui-view style="padding:5px 0.4rem">
+        <ui-view bindtap="goqbzb" style="width:30%">
+          <ui-text style="font-size:14px;color:blue;">王者荣耀</ui-text>
+          <ui-icon type="jiantouyou" color="blue" size="12"></ui-icon>
+        </ui-view>
+        <ui-view style="display:flex; flex-wrap:wrap;justify-content: space-between;"> 
+          <ui-view ui:for="{{allliving}}" ui:for-item="item" ui:for-index="{{item.id}}" bindtap="goexstudio(item.id)" style="padding:5px 0; width: 49%;">
+            <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px"></ui-image>
+            <ui-text style="font-size:10px">{{ item.title }}</ui-text>
+          </ui-view> 
+        </ui-view>
+      </ui-view>
+      <ui-view style="">
+      </ui-view>
+
+  </ui-view>
+</template>
+
+<script>
+import Exswiper from '#/component/tools/exswiper'
+import Exrollerup from '#/component/tools/exrollerup'
+import Exswiperplus from '#/component/tools/exswiperplus'
+import Exfullsearch from '#/component/tools/exfullsearch'
+export default {
+  components:{
+    Exswiper,
+    Exrollerup,
+    Exswiperplus,
+    Exfullsearch,
+  },
+  config: {
+    "navigationStyle": "custom"
+  },
+  data() {
+    return {
+      allliving:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4 },
+      ],
+      cjzcotems:[
+        { src: 'static/img/b1.jpg', title: '放肆玩乐，轻巧办公',id:1 },
+        { src: 'static/img/b2.jpg', title: '高温保护，一路驰骋',id:2 },
+        { src: 'static/img/b3.jpg', title: '七夕好货，独家礼赠',id:3 },
+        { src: 'static/img/b4.jpg', title: '七夕好货，独家礼赠',id:4 },
+      ], 
+    }
+  },
+  methods: {
+    goManage(){
+      ui.navigateTo({
+        url: '/component/page/manage'
+      })
+    },
+    goqbzb(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+      })
+    },
+    gocjzc(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+      })
+    },
+    goexstudio(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+      })
+    }
+
+  },
+  mounted() {}
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>
+

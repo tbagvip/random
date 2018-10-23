@@ -1,0 +1,82 @@
+<!--undefined-->
+<template>
+  <ui-page style="top:0">
+    <ui-fixed-view top="0" left="0" style="padding:0 0.4rem;width:100%;background:#69eb86">
+      <ui-view style="height:45px;display:flex;justify-content:space-between;align-items:center;">
+        <ui-icon bindtap="navigateBack" type="fanhui" size="19"></ui-icon>
+        <ui-view>
+          <ui-text bindtap="changeFlag">订阅管理</ui-text>  
+        </ui-view>
+        <ui-view>
+          <ui-text bindtap="changeFlag" style="font-size:12px">最近订阅</ui-text> 
+        </ui-view>
+      </ui-view>
+      <ui-form action="/search" style="">
+        <ui-input type="search" class="search" name="search" placeholder="搜索"></ui-input>
+      </ui-form>
+    </ui-fixed-view>
+    
+
+    <ui-view>
+      <ui-view style="background:#ffffd7;display:flex;justify-content:space-around;align-items:center;height:40px;margin-top:85px;">
+        <ui-text>通知权限关闭,主播们开播都通知不到你</ui-text>
+        <ui-text>立即开启></ui-text>
+      </ui-view>
+      <ui-view>
+        <ui-fixed-view class="sticky_header" top='120' left='0' style="width:100%;height:50px;background:pink;">1</ui-fixed-view>
+        <ui-view style="height:1000px;margin-top:50px">2</ui-view>
+      </ui-view>
+    </ui-view>
+      
+      
+  </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+    "navigationStyle": "custom"
+  },
+  data() {
+    return {
+      items: [],
+    }
+  },
+  methods: {
+    handleScroll(){
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      var sticky_header = document.getElementsByClassName("sticky_header")
+      var sticky_body = document.getElementsByClassName("sticky_body")
+        for(var i=0;i<sticky_header.length;i++){
+          sticky_header[i].index = i
+          // console.log(sticky_header[i].offsetTop)
+          // if(sticky_header.top<40){
+            // sticky_header.classList.add("Fixed")
+            // console.log(1)
+          // }else{
+            // sticky_header[i].classList.remove("Fixed")
+          // }
+        }
+    }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll,true)
+    for (let i = 1; i <= 20; i++) {
+      this.items.push(i + ' - 内容文本')
+    }
+  },
+  destroyed () {
+    window.addEventListener('scroll', this.handleScroll,true)
+  },
+}
+</script>
+
+<style lang="less">
+.Fixed{
+     width:100%;
+     position: fixed;
+     top:40px;
+     left:0;
+     z-index: 99;
+ }
+</style>

@@ -1,0 +1,82 @@
+<!--changesignature-->
+<template>
+  <ui-view style="width:100%">
+    <ui-view style="height:45px;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 0.4rem;background:#fff" >
+      <ui-icon type="fanhui" bindtap="goback"></ui-icon>
+      <ui-text style="">修改签名</ui-text>
+      <ui-text style="font-size:12px;" bindtap="save">保存</ui-text>
+    </ui-view>
+    <ui-view style="height:15px;">
+    </ui-view>
+    <ui-form style="background:#f3f3f3;width:100%;">
+      <ui-view style="padding:0 0.4rem;background:#fff;">
+        <ui-textarea ui:model="{{ signature }}" name="signature" type="text" style="border:none;padding:10px 0" show-clear="true" placeholder=" 请输入签名内容"></ui-textarea>
+      </ui-view>
+    </ui-form>
+  </ui-view>
+</template>
+
+<script>
+export default {
+  config:{
+    "navigationStyle": "custom",
+    "backgroundColor": "#efefef",
+  },
+  data() {
+    return {
+      signature:'',
+      userName: ''
+    }
+  },
+  methods: {
+    goback(){
+      ui.navigateBack()
+    },
+    getUserData(){
+      var self = this
+      ui.request({
+        url: '/userInfoSession/',
+        data:{},
+        success: function (res) {
+          // 如果session中存在个人信息, 那么用户名=res.data['data'][0]， isLogin的值设置为True
+          if(res.data['status']===1){
+            self.signature = res.data['data']["签名"]
+          }
+          // 如果session中不存在个人信息, isLogin的值设置为false
+          if(res.data['status']===0){
+          }
+        },
+        fail: function ({ errMsg }) {
+          ui.redirectTo({
+            url: '/component/mine/login'
+          })
+        }
+      })
+    },
+    save(){
+      ui.request({
+        url: '/changesignature/',
+        method:"POST",
+        data: {
+          signature: this.signature,
+        },
+        header: { 'content-type': "application/x-www-form-urlencoded" },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+      ui.navigateBack()
+    }
+  },
+  mounted() {
+    this.getUserData()
+  }
+}
+</script>
+
+<style lang="less">
+
+</style>

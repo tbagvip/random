@@ -1,0 +1,60 @@
+<template>
+  <ui-view style="padding:10px 0.4rem;">
+    <ui-roller style="padding:5px 0.4rem;background:#e1e1e1;border-radius:5px;" height='50'>
+      <ui-roller-item ui:for="{{ggitems}}" ui:for-item="item" ui:for-index="{{item.id}}">
+        <ui-row style="text-align:center">
+          <ui-col span="2">
+            <ui-text style="color:#F00;font-size:16px;line-height:40px;">活动</ui-text>
+          </ui-col>
+          <ui-col span="8">
+            <ui-text style="">{{item.title}}</ui-text>
+            <ui-text style="font-size:9px;color:#514e4a">{{item.time}} {{item.num}}人预订</ui-text>
+          </ui-col>
+          <ui-col span="2">
+            <ui-button type="warn" size="mini">预订</ui-button>
+          </ui-col>
+        </ui-row>
+      </ui-roller-item>
+    </ui-roller>
+
+  <ui-view>
+    <ui-button bindtap="makeRequest" type="primary">滚动公告组件测试ajax</ui-button>
+  </ui-view>
+  </ui-view>
+</template>
+
+<script>
+  export default {
+    data(){
+      return{
+        ggitems:[
+          { title: '英雄联盟', time: '今天晚上7点', num: 11111,id:1 },
+          { title: 'iphone100发布会', time: '明天晚上7点', num: 55555,id:2 },
+          { title: '吃鸡', time: '2018-11-13', num: 88888,id:3 },
+          { title: '农药', time: '2019-1-13', num: 574124,id:4 }
+        ],
+      }
+    },
+    methods:{
+      makeRequest(){
+        ui.request({
+          url: 'indexajaxTest',
+          data: {
+            x: 'abx',
+            y: 'xyz'
+          },
+          success: function (result) {
+            console.log(result.data)
+          },
+          fail: function ({ errMsg }) {
+            console.log('错误信息'+errMsg)
+          }
+        })
+      }
+    }
+  }
+</script>
+
+<style lang="less">
+
+</style>

@@ -1,0 +1,23 @@
+<!--undefined-->
+<template>
+  <ui-page>
+    <ui-view>历史记录</ui-view>
+  </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "我看过的"
+  },
+  data() {
+    return {}
+  },
+  methods: {},
+  mounted() {},
+}
+</script>
+
+<style lang="less">
+
+</style>

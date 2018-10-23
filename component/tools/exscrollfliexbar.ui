@@ -1,0 +1,135 @@
+<template>
+  <ui-view>
+    <ui-sticky stick-on-tap>
+      <ui-view style="width:100%;margin:0 auto;background-color:#ffaaaa">
+        <ui-tabs class="type-center" style="width:100%;" index="{{index}}" bindchange="handleChange">
+          <ui-tab ui:for="{{faveValue}}" ui:for-item="item" ui:for-index="{{item.id}}">
+            {{item.title}}
+          </ui-tab>
+        </ui-tabs>
+      </ui-view>
+      <ui-view slot="sticky">
+        <ui-view style="background-color:#ffaaaa">
+          <ui-view style="width:100%;margin:0 auto;">
+            <ui-tabs class="type-center"  style="width:100%" index="{{index}}"  bindchange="handleChange">
+              <ui-tab ui:for="{{faveValue}}" ui:for-item="item" ui:for-index="{{item.id}}">
+                {{item.title}}
+              </ui-tab>
+            </ui-tabs>
+          </ui-view>
+        </ui-view>
+      </ui-view>
+    </ui-sticky>
+    <ui-view style="background:#5a53df;font-size:30px;text-align:center;height:180px;line-height:180px">
+      天坑--index:{{index}}
+    </ui-view>
+    <!-- <ui-fixed-view top="146" left="0" style="width:100%;height:50px;">
+      <ui-button bindtap="makeRequest" type="primary" >吸顶组件测试ajax</ui-button>
+    </ui-fixed-view> -->
+
+    <ui-view style="padding:10px 0.4rem;">
+      <ui-view>
+        <ui-text bindtap="goqbzb" style="color:#0404dd;">王者荣耀</ui-text>
+        <ui-icon type="jiantouyou" color="blue" size="12"></ui-icon>
+      </ui-view>
+      <ui-view>
+        <ui-view style="display:flex; flex-wrap:wrap;justify-content: space-between;"> 
+          <ui-view ui:for="{{allliving}}" ui:for-item="item" ui:for-index="{{item.id}}"  bindtap="goexstudio(item.id)" style="width: 49%;padding:5px 0">
+            <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px"></ui-image>
+            <ui-text style="font-size:10px">{{ item.title }}</ui-text>
+          </ui-view> 
+        </ui-view>
+      </ui-view>
+    </ui-view>
+  </ui-view>
+</template>
+
+<script>
+export default {
+   data () {
+    return {
+      faveValue:[
+        { title: '全部',id:1 },
+        { title: '附近',id:2 },
+        { title: '抖音',id:3 },
+        { title: '斗舞',id:4 },
+        { title: '逗嘴',id:5 },
+        { title: '交友',id:6 },
+        { title: '短视频',id:7 },
+        { title: '全部',id:8 },
+        { title: '附近',id:9 },
+        { title: '抖音',id:10 },
+        { title: '斗舞',id:11 },
+        { title: '逗嘴',id:12 },
+        { title: '交友',id:13 },
+        { title: '短视频',id:14 }
+      ],
+      allliving:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4 },
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:5 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:6 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:7 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:8 },
+      ],
+      index:0
+    }
+  },
+  methods: {
+    makeRequest(){
+      ui.request({
+        url: 'indexajaxTest',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    },
+    handleChange (index) {
+      this.index = index
+      console.log(index)
+    },
+    goexstudio(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+      })
+    },
+    // handleScroll(){
+        // var searchBar = document.getElementById("searchBar")
+        // var searchBarBottom = document.getElementById("searchBarBottom")
+
+        // if(scrollTop>223){
+        //     searchBarBottom.classList.add('searchBarBottom')
+        //     searchBar.className="Fixed"
+        // }else{
+        //     searchBar.className=""
+        //     searchBar.classList.remove('Fixed')
+        //     searchBarBottom.classList.remove('searchBarBottom')
+        // }
+  },
+  mounted(){
+    // window.addEventListener('scroll', this.handleScroll,true)
+  },
+  destroyed () {
+    // window.removeEventListener('scroll', this.handleScroll,true)
+  },
+}
+</script>
+
+<style lang="less" scoped>
+
+ .ui-tab.active{
+   border: none;
+   color:#fff;
+ }
+</style>
+
+

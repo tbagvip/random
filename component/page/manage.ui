@@ -1,0 +1,39 @@
+<!--undefined-->
+<template>
+  <ui-page>
+    <ui-button bindtap="makeRequest" type="primary">搜索组件测试ajax</ui-button>
+  </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "管理"
+  },
+  data() {
+    return {}
+  },
+  methods: {
+    makeRequest(){
+      ui.request({
+        url: 'component/page/manage/ajaxTest',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    }
+  },
+  mounted() {}
+}
+</script>
+
+<style lang="less">
+
+</style>

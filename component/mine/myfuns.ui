@@ -1,0 +1,24 @@
+<!--undefined-->
+<template>
+  <ui-page>
+    <ui-view>我的粉丝<ui-view>
+  </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "我的粉丝"
+  },
+  data() {
+    return {}
+  },
+  methods: {},
+  mounted() {}
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>
+

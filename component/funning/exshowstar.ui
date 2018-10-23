@@ -1,0 +1,36 @@
+<!--undefined-->
+<template>
+  <ui-view>
+    <Exfullsearch></Exfullsearch>
+    <Exswiper></Exswiper>
+    <Exscrollfliexbar></Exscrollfliexbar>
+  </ui-view>
+  
+</template>
+
+<script>
+import Exfullsearch from '#/component/tools/exfullsearch'
+import Exswiper from '#/component/tools/exswiper'
+import Exscrollfliexbar from '#/component/tools/exscrollfliexbar'
+export default {
+  components:{
+    Exfullsearch,
+    Exswiper,
+    Exscrollfliexbar
+  },
+  config: {
+    "navigationStyle": "custom"
+  },
+  data() {
+    return {}
+  },
+  methods: {
+   
+  },
+  mounted() {}
+}
+</script>
+
+<style lang="less">
+
+</style>

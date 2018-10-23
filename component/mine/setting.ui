@@ -1,0 +1,126 @@
+
+<template>
+  <ui-page>
+    <!-- <ui-view> -->
+      <ui-view style="height:15px"></ui-view>
+      
+      <ui-view style="background:#fff;padding:0 0.4rem">
+        <ui-view style="height:50px;line-height:50px;position:relative;width:100%">
+          <ui-text>小窗口播放</ui-text>
+          <ui-row style="position:absolute;right:0;top:2px;">
+            <ui-switch value="true" ></ui-switch>
+          </ui-row>
+        </ui-view>
+
+        <ui-view style="height:52px;border-top:1px solid #f3f3f3;border-bottom:1px solid #f3f3f3;line-height:52px;position:relative;width:100%">
+          <ui-text>后台播放</ui-text>
+          <ui-row style="position:absolute;right:0;top:2px">
+            <ui-switch color="orange" value="true" ></ui-switch>
+          </ui-row>
+        </ui-view>
+
+        <ui-view style="height:50px;line-height:50px;position:relative;width:100%">
+          <ui-text>定时开关</ui-text>
+          <ui-row style="position:absolute;right:0;top:2px">
+            <ui-switch ></ui-switch>
+          </ui-row>
+        </ui-view>
+      </ui-view>
+
+      <ui-view style="height:15px"></ui-view>
+
+      <ui-view style="background:#fff;padding:5px 0.4rem">
+        <!-- 消息提醒设置 -->
+        <ui-view>
+          <ui-view>
+            <ui-text>消息提醒设置</ui-text>
+            <ui-icon type="jiantouyou" style="float:right" size="14"></ui-icon>
+          </ui-view>
+          <ui-view style="padding-bottom:3px;width:100%;display:flex;flex-wrap:nowrap;justify-content:space-between;">
+            <ui-view>通知权限已关闭,暂无法接收开播、私播等通知</ui-view>
+            <ui-view style="color:orange;width:80px">
+              <ui-text style="font-size:12px">立即开启</ui-text>
+              <ui-icon type="jiantouyou" size="12"></ui-icon>
+            </ui-view>
+          </ui-view>
+        </ui-view>
+        <!-- 首页顶部导航推荐 -->
+        <ui-view style="height:50px;border-top:1px solid #f3f3f3;border-bottom:1px solid #f3f3f3;line-height:52px;position:relative;width:100%">
+          <ui-text>首页顶部导航推荐</ui-text>
+          <ui-row style="position:absolute;right:0;top:2px">
+            <ui-switch color="orange"></ui-switch>
+          </ui-row>
+        </ui-view>
+        <!-- 预订活动添加到日历 -->
+        <ui-view style="height:50px;line-height:50px;position:relative;width:100%">
+          <ui-text>预订活动添加到日历</ui-text>
+          <ui-row style="position:absolute;right:0;top:2px">
+            <ui-switch color="orange"></ui-switch>
+          </ui-row>
+        </ui-view>
+        <!-- 清除缓存 -->
+        <ui-view style="height:50px;border-top:1px solid #f3f3f3;border-bottom:1px solid #f3f3f3;line-height:52px;position:relative;width:100%">
+          <ui-text>清除缓存</ui-text>
+          <ui-row style="position:absolute;right:0;top:2px">
+            <ui-switch color="orange"></ui-switch>
+          </ui-row>
+        </ui-view>
+        <!-- 违规查询 -->
+        <ui-view style="height:50px;line-height:50px;">
+          <ui-view style="display:inline-block;float:right;">
+            <ui-text style="font-size:12px">账号被封禁/处罚,在这里查询</ui-text>
+            <ui-icon type="jiantouyou" size="14"></ui-icon>
+          </ui-view>
+          <ui-view style="width:50%">违规查询</ui-view>
+        </ui-view>
+      </ui-view>
+
+      <ui-view style="height:15px"></ui-view>
+        
+      <ui-view style="background:#fff;padding:0.1rem 0.4rem">
+        <ui-view style="padding:0.2rem 0">
+          <ui-text>合作联系</ui-text>
+          <ui-view style="display:inline-block;float:right;margin-top:2px">
+            <ui-icon type="jiantouyou" size="14"></ui-icon>
+          </ui-view>
+        </ui-view>
+
+        <ui-view style="padding:0.2rem 0;border-bottom:1px solid #f3f3f3;border-top:1px solid #f3f3f3;border-bottom:1px solid #f3f3f3;">
+          <ui-text>关于虎牙直播</ui-text>
+          <ui-view style="display:inline-block;float:right;margin-top:2px">
+            <ui-icon type="jiantouyou" size="14"></ui-icon>
+          </ui-view>
+        </ui-view>
+
+
+        <ui-view style="padding:0.2rem 0">
+          <ui-text>关于虎牙评分</ui-text>
+          <ui-view style="display:inline-block;float:right;margin-top:2px">
+            <ui-icon type="jiantouyou" size="14"></ui-icon>
+          </ui-view>
+        </ui-view>
+      </ui-view>
+    <!-- </ui-view> -->
+  </ui-page>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "设置",
+    "backgroundColor":"#f3f3f3"
+  },
+  data() {
+    return {}
+  },
+  methods: {},
+  mounted() {}
+}
+</script>
+
+<style lang="less">
+.weui-cell{
+  padding:0;
+}
+
+</style>

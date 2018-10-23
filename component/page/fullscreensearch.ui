@@ -1,0 +1,87 @@
+<template>
+  <ui-view style="background:#fff;height:100%">
+    <!-- 顶部搜索 -->
+    <ui-view style="position:relative;padding:10px 0.4rem;overflow:hidden;margin:0 auto;">
+       <ui-view style="display:flex"> 
+        <ui-input placeholder="请输入关键字" style="border:none;border-radius:5px;background:#ececec;padding-left:18px"></ui-input>
+        <ui-text bindtap="navigateBack" class="back" style="width:35px;margin-left:0.4rem;text-align:center;clear:both;line-height:36px;color:#d87821">取消
+        </ui-text>
+       </ui-view> 
+    </ui-view>
+    <!-- 我搜过的 -->
+    <ui-view style="padding:5px 0.4rem;width:100%">
+      <ui-view>
+        <ui-text>我搜过的</ui-text>
+        <ui-view style="float:right">
+          <ui-icon type="shanchu" size="14"></ui-icon><ui-text>清空</ui-text>
+        </ui-view>
+      </ui-view>
+      <ui-view style="display:flex;flex-wrap:wrap;justify-content:space-around;width:100%">
+        <ui-text ui:for="{{historyitems}}" ui:for-item="item" ui:for-index="{{item.id}}" style="width:20%;background:#eee;text-align:center;padding:5px;margin:5px;border-radius:5px;">
+          {{ item.content }}
+        </ui-text>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:15px;width:100%;background:#eee;margin-top:10px"></ui-view>
+    <!-- 热门搜索 -->
+    <ui-view style="padding:15px 0.4rem">
+      <ui-view style="">热门搜索</ui-view>
+      <ui-view style="display:flex;flex-wrap:wrap;">
+        <ui-view ui:for="{{historyitems}}" ui:for-item="item" ui:for-index="{{item.id}}" style="width:50%;margin:5px 0">
+          <ui-text style="display:inline-block;height:16px;line-height:15px;width:16px;background:red;text-align:center;border-radius:3px;font-size:10px;">{{ item.id }}</ui-text>
+          <ui-text>{{ item.content }}</ui-text>
+        </ui-view>
+      </ui-view>
+    </ui-view>
+
+    <ui-view style="height:15px;background:#eee;"></ui-view>
+    
+    <ui-view style="width:100%;padding:10px 0.4rem;">
+      <ui-view>
+        <ui-text>热门资讯</ui-text>
+        <ui-view style="float:right">
+          <ui-text>更多</ui-text><ui-icon type="jiantouyou" size="13"></ui-icon>
+        </ui-view>
+      </ui-view>
+      <ui-view>
+        <ui-view ui:for="{{historyitems}}" ui:for-item="item" ui:for-index="{{item.id}}" style="margin:5px 0">
+          <ui-text style="margin-right:5px">头条 </ui-text> 
+          <ui-text> {{ item.content }}</ui-text>
+          <ui-text style="float:right">{{ item.time }}</ui-text>
+        </ui-view>
+      </ui-view>
+    </ui-view>
+  </ui-view>
+</template>
+
+<script>
+export default {
+  config: {
+    "navigationStyle": "custom"
+  },
+  data(){
+    return{
+      historyitems:[
+        {id:1, content:"一起看", time:"2018-10-18"},
+        {id:2, content:"一起看", time:"2018-10-18"},
+        {id:3, content:"一起看", time:"2018-10-18"},
+        {id:4, content:"一起看", time:"2018-10-18"},
+        {id:5, content:"一起看", time:"2018-10-18"},
+        {id:6, content:"一起看", time:"2018-10-18"},
+        {id:7, content:"一起看", time:"2018-10-18"},
+        {id:8, content:"一起看", time:"2018-10-18"},
+      ]
+    }
+  },
+  methods:{
+    navigateBack(){
+      ui.navigateBack()
+    },
+  }
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>

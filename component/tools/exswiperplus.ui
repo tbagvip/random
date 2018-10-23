@@ -1,0 +1,119 @@
+
+<template>
+  <ui-view style="padding:5px 0.4rem;">
+    <ui-text bindtap="gozxry" style="color:#0404dd">最新热游</ui-text>
+    <ui-view style="padding:0.2rem 0">
+      <ui-ex-swiper pagination slides-per-view="5" space-between="7" >
+        <ui-ex-swiper-item ui:for="{{swiperitem2}}" ui:for-item="item" ui:for-index="{{item.id}}"  bindtap="goexstudio(item.id)">
+          <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px"></ui-image>
+        </ui-ex-swiper-item>
+      </ui-ex-swiper>
+    </ui-view>
+  </ui-view>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "undefined"
+  },
+  data() {
+    return {
+      swiperitem2: [
+        {
+          id:1,
+          title: 'Glow',
+          score: 9.7,
+          src: 'http://images.uileader.com/20171103/5c7dfdc3-c6ed-4968-82f7-4d55c191dead.jpg'
+        },
+        {
+          id:2,
+          title: 'Got ',
+          score: 7.8,
+          src: 'http://images.uileader.com/20171103/dd760606-ab0f-45b2-a030-bab65e0b2a56.jpg'
+        },
+        {
+          id:3,
+          title: 'MISS SLOANE',
+          score: 8.9,
+          src: 'http://images.uileader.com/20171103/14feebf0-3061-4681-bb45-fa27d76af891.jpg'
+        },
+        {
+          id:4,
+          title: 'gifted',
+          score: 8.8,
+          src: 'http://images.uileader.com/20171103/7d89142f-b88d-4001-8196-7fd6834c2630.jpg'
+        },
+        {
+          id:5,
+          title: 'BORN LEADER',
+          score: 9.2,
+          src: 'http://images.uileader.com/20171103/5fce28ba-fd02-48cb-a1c2-ce0ff3801844.jpg'
+        },
+        {
+          id:6,
+          title: 'Big Little Lies',
+          score: 7.1,
+          src: 'http://images.uileader.com/20171103/2cdb945d-349d-4d19-8347-629675adde76.jpg'
+        },
+        {
+          id:7,
+          title: 'MANCHESTER SEA',
+          score: 9.7,
+          src: 'http://images.uileader.com/20171103/727a3953-fafb-44e7-8fd8-92e84e11442f.jpg'
+        },
+        {
+          id:8,
+          title: '金刚',
+          score: 8.8,
+          src: 'http://images.uileader.com/20171103/4ac53f4c-1e62-40ce-87d9-2b7638cf00be.jpg'
+        },
+        {
+          id:9,
+          title: 'THE CIRCLE',
+          score: 8.3,
+          src: 'http://images.uileader.com/20171103/b13d8fbd-bb0e-4510-b680-4a559b79407c.jpg'
+        },
+        {
+          id:10,
+          title: 'UNITED KINDOM',
+          score: 8.6,
+          src: 'http://images.uileader.com/20171103/f5d59af6-c4af-4faa-b36a-3473b78a7612.jpg'
+        },
+        {
+          id:11,
+          title: 'UNITED KINDOM',
+          score: 8.6,
+          src: 'http://images.uileader.com/20171103/aa1b5858-8d6d-4e8b-9723-87fd802c78d9.jpg'
+        },
+        {
+          id:12,
+          title: 'UNITED KINDOM',
+          score: 9.3,
+          src: 'http://images.uileader.com/20171103/6439465c-bac6-4d4f-bfd2-4376d0465b95.jpg'
+        },
+        {
+          id:13,
+          title: 'UNITED KINDOM',
+          score: 9.6,
+          src: 'http://images.uileader.com/20171103/9e65711d-c1dc-450f-878a-fab40bd09b55.jpg'
+        }
+      ],
+    }
+  },
+  methods: {
+    gozxry(){
+    },
+    goexstudio(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+      })
+    }
+  },
+  mounted() {}
+}
+</script>
+
+<style lang="less">
+
+</style>

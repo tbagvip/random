@@ -1,0 +1,94 @@
+<!--undefined-->
+<template>
+  <ui-view>
+    <Exfullsearch></Exfullsearch>
+    <Exswiper></Exswiper>
+    <ui-button bindtap="makeRequest" type="primary">娱乐首页测试ajax</ui-button>
+    <ui-view style="padding:5px 0.4rem">
+      <ui-view bindtap="goqbzb" style="width:30%">
+        <ui-text style="font-size:14px;color:blue;">娱乐天地</ui-text>
+        <ui-icon type="jiantouyou" color="blue" size="12"></ui-icon>
+      </ui-view>
+      <ui-view style="display:flex; flex-wrap:wrap;justify-content: space-between;"> 
+        <ui-view ui:for="{{allliving}}" ui:for-item="item" ui:for-index="{{item.id}}" bindtap="goexstudio(item.id)" style="padding:5px 0; width: 49%;">
+          <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px"></ui-image>
+          <ui-text style="font-size:10px">{{ item.title }}</ui-text>
+        </ui-view> 
+      </ui-view>
+    </ui-view>
+    <ui-view style="padding:5px 0.4rem">
+      <ui-view bindtap="goqbzb" style="width:30%">
+        <ui-text style="font-size:14px;color:blue;">二次元</ui-text>
+        <ui-icon type="jiantouyou" color="blue" size="12"></ui-icon>
+      </ui-view>
+      <ui-view style="display:flex; flex-wrap:wrap;justify-content: space-between;"> 
+        <ui-view ui:for="{{allliving}}" ui:for-item="item" ui:for-index="{{item.id}}" bindtap="goexstudio(item.id)" style="padding:5px 0; width: 49%;">
+          <ui-image src="{{ item.src }}" mode="simple" style="border-radius:5px"></ui-image>
+          <ui-text style="font-size:10px">{{ item.title }}</ui-text>
+        </ui-view> 
+      </ui-view>
+    </ui-view>
+    
+    
+  </ui-view>
+</template>
+
+<script>
+import Exfullsearch from '#/component/tools/exfullsearch'
+import Exswiper from '#/component/tools/exswiper'
+export default {
+  components:{
+    Exfullsearch,
+    Exswiper
+  },
+  config: {
+    "navigationStyle": "custom"
+  },
+  data() {
+    return {
+      allliving:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4 },
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:5 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:6 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:7 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:8 },
+      ],
+    }
+  },
+  methods: {
+    goqbzb(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+      })
+    },
+    goexstudio(id){
+      ui.navigateTo({
+        url: '/component/living/exstudio?roomNum='+id
+      })
+    },
+    makeRequest(){
+      ui.request({
+        url: '/indexajaxTest/',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    }
+  },
+  mounted() {}
+}
+</script>
+
+<style lang="less">
+
+</style>

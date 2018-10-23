@@ -1,0 +1,48 @@
+<template>
+  <ui-page>
+    <ui-button bindtap="makeRequest" type="primary">消息中心测试ajax</ui-button>
+    <ui-button type="primary">{{nums}}</ui-button>
+    <ui-button type="primary">{{strs}}</ui-button>
+  </ui-page>
+</template>
+
+
+<script>
+export default {
+  config: {
+    "navigationBarTitleText": "消息中心"
+  },
+  data () {
+    return{
+      nums:0,
+      strs:'hahahha',
+    }
+  },
+  methods:{
+
+    makeRequest(){
+      var self = this
+      ui.request({
+        url: 'indexajaxTest',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          self.nums = result.data["data"][1][2]
+          self.strs = result.data["data"][1][0]
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>
+
+

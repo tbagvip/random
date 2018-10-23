@@ -1,0 +1,103 @@
+<template>
+    <div>
+      <div style="width:100%;position:fixed">
+        <div style="background:#ff8040;height:200px;width:100%;position:relative">视频
+          <ui-icon bindtap="goback" type="fanhui" style="position:absolute;top:10px;left:10px;" size="20"></ui-icon>
+          <div style="position:absolute;bottom:10px;right:10px;font-size:10px">
+            <span>虎牙直播</span>
+            <span>livingNum</span>
+          </div>
+        </div>
+        <div style="background:#eaeaea;height:40px;line-height:40px;width:100%;display:flex; flex-wrap:nowrap;justify-content: space-between;">
+          <div class="living_title_bar" bindtap="show_content" style="padding:0 0.4rem;">聊天</div>
+          <div class="living_title_bar" bindtap="show_content" style="padding:0 0.4rem;">主播</div>
+          <div class="living_title_bar" bindtap="show_content" style="padding:0 0.4rem;">排行</div>
+          <div class="living_title_bar" bindtap="show_content" style="padding:0 0.4rem;">贵宾(318)</div>
+          <div style="padding:0 0.4rem" :class="[Flag? 'notbook':'booked']" bindtap="changeflag"> 订阅 </div>
+        </div>
+      </div>
+      <div class="living_content" style="padding-top:240px;display:block;">
+        <div style="padding:0 0.3rem;font-size:160px;">
+          
+        </div>
+        <Exchatroom></Exchatroom>
+      </div>
+      <div class="living_content" style="padding-top:240px;display:none;">
+        <Exanchor></Exanchor>
+      </div>
+      <div class="living_content" style="padding-top:240px;display:none;">
+        <Exranking></Exranking>
+      </div>
+      <div class="living_content" style="padding-top:240px;display:none;">
+        <Exvip></Exvip>
+      </div>
+    </div>
+</template>
+
+<script>
+import Exranking from '#/component/living/exranking'
+import Exanchor from '#/component/living/exanchor'
+import Exchatroom from '#/component/living/exchatroom'
+import Exvip from '#/component/living/exvip'
+export default{
+  components:{
+    Exranking,
+    Exanchor,
+    Exchatroom,
+    Exvip,
+  },
+  config: {
+    "navigationStyle": "custom",
+  },
+  data(){
+    return{
+      Flag:false,
+    }
+  },
+  methods:{
+    goback(){
+      ui.navigateBack(-1)
+    },
+    changeflag(){
+      this.Flag = !this.Flag
+    },
+    show_content(){
+      var living_title_bar = document.getElementsByClassName("living_title_bar");
+      var living_content = document.getElementsByClassName("living_content");
+      for(var i=0;i<living_title_bar.length;i++){
+        living_title_bar[i].index = i;
+        living_title_bar[i].onclick = function(){
+          console.log("this.index--"+this.index)
+          for(var j=0;j<living_content.length;j++){
+            living_title_bar[j].style.border="none"
+            living_content[j].style.display="none"
+            
+          }
+          this.style.borderBottom="2px solid #ff8000"
+          living_content[this.index].style.display="block"
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style lang="less">
+.booked{
+  background:orange;
+}
+
+.notbook{
+  background:#fff;
+}
+
+.show{
+  display: block
+}
+
+.hidden{
+  display: none
+}
+
+</style>
+

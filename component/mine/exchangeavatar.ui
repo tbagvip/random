@@ -1,0 +1,55 @@
+<template>
+    <ui-popup ui:model="{{ show5 }}" height="270" background="transparent">
+    <ui-view class="popup5">
+        <ui-row height="40" border-bottom>
+        <ui-col vertical-align="middle" space-left="20">动漫APP</ui-col>
+        <ui-col width="40" vertical-align="middle" align="center" bindtap="handleShow('show5')">
+            <ui-icon name="x" size="18" color="#FC8950"></ui-icon>
+        </ui-col>
+        </ui-row>
+        <ui-view>更新更快、流量超省、内容更全</ui-view>
+        <ui-row height="50">
+        <ui-col space-left="20" space-right="10" vertical-align="middle">
+            <ui-button>继续阅读</ui-button>
+        </ui-col>
+        <ui-col space-left="10" space-right="20" vertical-align="middle">
+            <ui-button type="primary" bindtap="handleShow('show5')">安装享福利</ui-button>
+        </ui-col>
+        </ui-row>
+    </ui-view>
+    </ui-popup>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      show5: false,
+    }
+  },
+  methods: {
+    // handleShow (key) {
+    //   this[key] = false
+    // },
+    // changeavatar () {
+    //   this.show5 = true
+    // }
+  }
+    
+}
+</script>
+
+<style lang="less" scoped>
+.popup5{
+  width: 95%;
+  background-color:#fff;
+  height:250px;
+  margin:0 auto;
+  border-radius:5px;
+  overflow:hidden;
+  .ui-view{
+    line-height: 30px;
+    padding: 10px 20px;
+  }
+}
+</style>

@@ -1,0 +1,143 @@
+<template>
+    <ui-page>
+        <ui-view style="padding:10px 0.4rem">{{telvalue}},请完善以下资料:</ui-view>
+        <ui-form style="padding:5px 0.4rem;width:100%" bindsubmit="formSubmit">
+            <ui-view style="display:flex;line-height:36px">
+                <ui-text style="width:40px;">ID:</ui-text>
+                <ui-input name="telvalue" value="{{telvalue}}" disabled style="padding:0;"></ui-input>
+            </ui-view>
+
+            <ui-view style="display:flex;line-height:50px">
+                <ui-text style="width:40px">昵称:</ui-text>
+                <ui-input name="username" placeholder=" 昵称不能为空" style="padding:0 3px;margin:6px auto"></ui-input>
+            </ui-view>
+            
+            <ui-view style="display:flex;line-height:38px">
+                <ui-text style="width:40px">密码:</ui-text>
+                <ui-input name="pwd" type="password" placeholder=" 密码不能为空" style="padding:0 3px"></ui-input>
+            </ui-view>
+
+            <ui-view style="display:flex;line-height:50px">
+                <ui-text style="width:40px">邮箱:</ui-text>
+                <ui-input type="email" name="email" placeholder=" 请输入正确的邮箱地址" style="padding:0 3px;margin:6px auto"></ui-input>
+            </ui-view>
+
+            <ui-view style="display:flex;line-height:38px">
+                <ui-text style="width:40px">年龄:</ui-text>
+                <ui-input name="age" type="number" style="padding:0 3px" placeholder=" 请输入年龄"></ui-input>
+            </ui-view>
+
+            <ui-view style="display:flex;line-height:50px">
+                <ui-text style="width:40px">住址:</ui-text>
+                <ui-input name="address" placeholder=" 收货地址" style="padding:0 3px;margin:6px auto"></ui-input>
+            </ui-view>
+
+            <ui-view style="display:flex;line-height:36px">
+                <ui-text style="width:50px;">性别:</ui-text>
+                <ui-radio-group name='sex'>
+                    <ui-label class="radio">
+                        <ui-radio value="男" checked />男
+                    </ui-label>
+                    <ui-label class="radio">
+                        <ui-radio value="女" />女
+                    </ui-label>
+                </ui-radio-group>
+            </ui-view>
+
+            <ui-view style="display:flex;line-height:38px">
+                <ui-text style="width:80px;margin-right:5px">上传头像:</ui-text>
+                <ui-input name="file" type="file" style="padding:0 2px"></ui-input>
+            </ui-view>
+
+            <ui-button form-type="submit" type="submit" style="margin:20px auto;background:#f2a63a;color:#fff">提 交</ui-button>
+        </ui-form>
+    </ui-page>
+</template>
+
+<script>
+export default {
+    config: {
+        navigationBarTitleText: "完善个人资料",
+    },
+    data() {
+        return {
+            telvalue:'17707161300',
+        }
+    },
+    methods: {
+        formSubmit (e) {
+            ui.request({
+                url: '/registered/',
+                method: 'POST',
+                data: e,
+                header: { 'content-type': "application/x-www-form-urlencoded" },
+                success: function (res) {
+                    var startNum = 4;
+                    // 注册成功4秒后返回个人主页
+                    if(res.data["status"]===1){
+                        var timer = setInterval(function(){
+                            startNum--
+                            ui.showToast({ title: res.data["Msg"]+","+startNum+"秒后返回个人主页",duration: 1000 })
+                            if(startNum<1){
+                                clearInterval(timer)
+                                 ui.switchTab({
+                                    url: '/pages/user'
+                                })
+                            }
+                        },1000)
+                    }
+                    // 注册失败4秒后返回手机验证页
+                    else{
+                        var timer = setInterval(function(){
+                            startNum--
+                            ui.showToast({ title: res.data["Msg"]+","+startNum+"秒后返回注册",duration: 1000 })
+                            if(startNum<1){
+                                clearInterval(timer)
+                                ui.redirectTo({
+                                    url: '/component/mine/registered'
+                                })
+                            }
+                        },1000)
+                        
+                    }
+                },
+                error: function (res) {
+                    console.log('错误信息'+res.data)
+                }
+            })
+        },
+        gettelvalue(){
+            var self = this
+            var startNum = 4
+            ui.request({
+                url: '/getTelSession/',
+                data: { },
+                success: function (res) {
+                    if(res.data['status']===1){
+                        self.telvalue = res.data['data']
+                    }
+                    if(res.data['status']===0){
+                        ui.showToast({ title: res.data["Msg"]+","+startNum+"秒后返回注册",duration: 1000 })
+                        ui.redirectTo({
+                            url: '/component/mine/registered'
+                        })
+                    }
+                },
+                fail: function ({ errMsg }) {
+                    console.log('错误信息'+errMsg)
+                }
+            })
+        }
+    },
+    created() {
+        this.gettelvalue()
+
+    },
+    watch:{}
+}
+      
+</script>
+
+<style lang="less" scoped>
+
+</style>

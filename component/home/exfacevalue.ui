@@ -1,0 +1,61 @@
+<!--undefined-->
+<template>
+  <ui-view>
+    <Exfullsearch></Exfullsearch>
+    <Exswiper></Exswiper>
+    <Exrollerup></Exrollerup>
+    <Exscrollfliexbar></Exscrollfliexbar>
+    <ui-button bindtap="makeRequest" type="primary">分页(颜值)测试ajax</ui-button>
+    
+  </ui-view>
+</template>
+
+<script>
+import Exswiper from '#/component/tools/exswiper'
+import Exrollerup from '#/component/tools/exrollerup'
+import Exfullsearch from '#/component/tools/exfullsearch'
+import Exscrollfliexbar from '#/component/tools/exscrollfliexbar'
+export default {
+  components:{
+    Exswiper,
+    Exrollerup,
+    Exscrollfliexbar,
+    Exfullsearch
+  },
+  config: {
+    "navigationStyle": "custom"
+  },
+  data() {
+    return {
+    allliving:[
+        { src: 'static/img/a1.jpg', title: '放肆玩乐，轻巧办公',id:1 },
+        { src: 'static/img/a2.jpg', title: '高温保护，一路驰骋',id:2 },
+        { src: 'static/img/a3.jpg', title: '七夕好货，独家礼赠',id:3 },
+        { src: 'static/img/a4.jpg', title: '七夕好货，独家礼赠',id:4 },
+      ],
+    }
+  },
+  methods: {
+    makeRequest(){
+      ui.request({
+        url: 'faceajaxTest',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    }
+  },
+  mounted() {}
+}
+</script>
+
+<style lang="less">
+
+</style>

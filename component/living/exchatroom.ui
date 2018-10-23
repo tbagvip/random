@@ -1,0 +1,195 @@
+<template>
+    <div>
+        <div ref="chatcontent" style="padding: 0 0.2rem;padding-bottom:50px;overflow-y: auto;"></div>
+        <div style="width:100%;height:50px;background:pink;padding:0 0.2rem;position:fixed;bottom:0;
+                display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:center;border-top:1px solid #e1e1e1">
+            <ui-button style="margin:0 5px 0 0;padding:0 5px;border:1px solid #e1e1e1;background:#ed1e1e;" 
+                        bindtap="openLoginUI" size="mini">{{ isLogin? userName:"未登录"}}</ui-button>
+            <div style="width:100%;position:relative;border:1px solid #e1e1e1;">
+                <ui-icon type="biaoqing" size="20" style="position:absolute;left:5px"></ui-icon>
+                <ui-icon type="yuyin" size="20" style="position:absolute;right:5px;z-index:1"></ui-icon>
+                <input ref="chatinput" ui:model="{{speaking}}" name="chatinput" placeholder=" 长按语音按钮发言~" show-clear='false'
+                       :disabled="isLogin? false:true" style="width:100%;height:28px;background:#f5f5f5;padding:0 25px;border-radius:4px"/>
+            </div>
+            <ui-button bindtap='sendMessage' :disabled="Slen>=1? false:true" size="mini" style="margin:0 5px;padding:0 10px;border:1px solid #e1e1e1;background:#92620b;">发送</ui-button>
+            <ui-icon type="liwu" size="24" color="red"></ui-icon>
+        </div>
+
+        <ui-popup ui:model="{{ LoginUI }}" style="width:80%;height:170px;margin-bottom: 300px;margin-left:10%">
+            <ui-form bindsubmit="formSubmit" style="background:#f3f3f3;width:100%;padding-top:15px">
+                <ui-view style="display:flex;padding:3px 0.4rem;background:#fff;">
+                    <ui-icon type="yonghu1" size="22" ></ui-icon>
+                    <ui-input ui:model="{{ userName }}" name="username" type="text" style="border:none;padding:0 2px" show-clear="true" placeholder=" YY号/手机号码/邮箱地址"></ui-input>
+                    <ui-icon type="jiantouxia" style="margin-top:5px"></ui-icon>
+                </ui-view>
+                <ui-view style="display:flex;border-top:1px solid #f3f3f3;padding:3px 0.4rem;background:#fff;">
+                    <ui-icon type="mima1" size="22"></ui-icon>
+                    <ui-input ui:model="{{ password }}" name="password" type="password" style="border:none;padding:0 2px" show-clear="true" placeholder=" 请输入密码"></ui-input>
+                </ui-view>
+                <ui-button :disabled="((Ulen>=11&&Ulen<=20)&&(Plen>=10&&Plen<=20))? false:true" form-type="submit" 
+                        style="width:95%;margin:15px 2.5%;background:#ffa500;border:none;">登 录</ui-button>
+            </ui-form>
+        </ui-popup>
+    </div>
+</template>
+
+<script>
+const aa = 123
+export default {
+    data(){
+        return{
+            isLogin: false,
+            LoginUI:false,
+            userName:"",
+            password:'',
+            Slen:0,
+            roomNum: ui.getQuery()['roomNum'],
+            speaking: '',
+            chatSocket: null,
+            backMsg:null,
+            Ulen:0,
+            Plen:0,
+        }
+    },
+    methods:{
+        openLoginUI () {
+            if(this.isLogin){
+                this.LoginUI = false
+            }else{
+                this.LoginUI = true
+            }
+        },
+        getUserData(){
+            var self = this
+            ui.request({
+                url: '/userInfoSession/',
+                data:{},
+                success: function (res) {
+                // 如果session中存在个人信息, 那么用户名=res.data['data'][0]， isLogin的值设置为True
+                    if(res.data['status']===1){
+                        self.isLogin = true
+                        self.userName = res.data['data']["昵称"]
+                        self.money = res.data['data']["金钱"]
+                    }
+                    // 如果session中不存在个人信息, isLogin的值设置为false
+                    if(res.data['status']===0){
+                        self.isLogin = false
+                    }
+                },
+                fail: function ({ errMsg }) {
+                    self.isLogin = false
+                }
+            })
+        },
+        // ajax发消息
+        // sendSocketMessage(){
+        //     this.$refs.chatcontent.innerHTML += "<p style='margin:2px auto;width:100%;overflow:auto;word-wrap: break-word; word-break: normal;'>"+this.userName+"："+this.speaking+"</p>"
+        //     this.$refs.chatinput.value = ""
+        //     var self = this
+        //     ui.request({
+        //         url: '/ajaxchat/',
+        //         data: {
+        //             chatinput: this.speaking,
+        //         },
+        //         success: function (result) {
+        //             if(result.data["status"]===1){
+        //                 self.speaking = result.data["data"][0]
+        //             }
+        //         },
+        //         fail: function ({ errMsg }) {
+        //             console.log('错误信息'+errMsg)
+        //         }
+        //     })
+        // },
+        
+        initSocket(){
+            var sendUrl = 'ws://' + window.location.host + '/ws/chat/'+this.roomNum+'/'
+            var self = this
+            self.chatSocket = new WebSocket(sendUrl)
+            self.chatSocket.onmessage = function(e){
+                self.backMsg = JSON.parse(e.data)
+                self.$refs.chatcontent.innerHTML += "<p style='margin:3px auto;width:100%;overflow:auto;word-wrap: break-word; word-break: normal;'>"+
+                                                        "<span style='background:#b9ffb9'>"+self.backMsg['speaker']+"</span>"+": "+
+                                                        "<span style='background:#c4ffff'>"+self.backMsg['message']+"</span>"+
+                                                    "</p>"
+            }
+            return self.chatSocket
+        },
+
+        sendMessage(){
+            if(this.Slen !='')
+            this.chatSocket.send(JSON.stringify({
+                'message': this.speaking,
+                "speaker": this.userName,
+            }))
+            this.speaking = ""
+        },
+        close(){
+            this.chatSocket.onclose = function(e){
+                cons.log(e)
+                console.log("Chat socket closed unexpectedly")
+            }
+        },
+
+        formSubmit (e) {
+            var self = this
+            ui.request({
+                url: '/login/',
+                method: 'POST',
+                data: e,
+                header: { 'content-type': "application/x-www-form-urlencoded" },
+                success: function (res) {
+                    if(res.data["status"]===0){
+                        ui.showToast({ title: res.data['Msg'], icon: 'mima', duration: 2000 })
+                    }
+                    if(res.data["status"]===1){
+                        self.LoginUI = false
+                        self.isLogin = true
+                        self.userName = res.data['data']["昵称"]
+                        ui.showToast({ title: res.data['Msg'], icon: 'success', duration: 2000 })
+                    }
+                },
+                error: function (res) {
+                    self.LoginUI = true
+                    self.isLogin = false
+                    ui.showToast({ title: "账号,密码或者网络错误", duration: 2000 })
+                    self.password = ''
+                }
+            })
+            
+        },
+    },
+
+    mounted() {
+        this.getUserData()
+    },
+    watch:{
+        speaking:function(){
+            this.Slen = this.speaking.replace(/(^\s*)|(\s*$)/g, "").length;
+            return this.Slen
+        },
+        userName:function(){
+            this.Ulen = this.userName.replace(/(^\s*)|(\s*$)/g, "").length;
+            return this.Ulen;
+        },
+        password:function(){
+            this.Plen = this.password.replace(/(^\s*)|(\s*$)/g, "").length;
+            return this.Ulen; 
+        }
+    },
+    created(){
+        this.initSocket()
+    },
+    destroyed(){
+        this.close()
+    }
+    
+}
+</script>
+
+<style lang="less" scoped>
+.ui-button.is-disabled, .ui-button.is-disabled:hover, .ui-button.is-disabled:focus{
+  opacity: 0.5;
+}
+
+</style>

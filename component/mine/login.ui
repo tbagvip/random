@@ -1,0 +1,103 @@
+<!--undefined-->
+<template>
+  <ui-page>
+    <ui-view style="height:15px"></ui-view>
+
+    <ui-form bindsubmit="formSubmit" style="background:#f3f3f3;width:100%">
+      <ui-view style="display:flex;padding:3px 0.4rem;background:#fff;">
+        <ui-icon type="yonghu1" size="22" ></ui-icon>
+        <ui-input ui:model="{{ username }}" name="username" type="text" style="border:none;padding:0 2px" show-clear="true" placeholder=" YY号/手机号码/邮箱地址"></ui-input>
+        <ui-icon type="jiantouxia" style="margin-top:5px"></ui-icon>
+      </ui-view>
+      <ui-view style="display:flex;border-top:1px solid #f3f3f3;padding:3px 0.4rem;background:#fff;">
+        <ui-icon type="mima1" size="22"></ui-icon>
+        <ui-input ui:model="{{ password }}" name="password" type="password" style="border:none;padding:0 2px" show-clear="true" placeholder=" 请输入密码"></ui-input>
+      </ui-view>
+
+      <ui-button :disabled="((Ulen>=11&&Ulen<=20)&&(Plen>=10&&Plen<=20))? false:true" form-type="submit" 
+              style="width:95%;margin:15px 2.5%;background:#ffa500;border:none;">登 录</ui-button>
+    </ui-form>
+    <ui-view style="padding:0 0.4rem;">
+      <ui-text bindtap="goRegistered">手机号码注册</ui-text>
+      <ui-text style="float:right">忘记密码</ui-text>
+    </ui-view>
+
+    <ui-view style="margin-top:50px;">
+      <ui-view style="height:1px;width:80%;margin:0 auto;background:blue;"></ui-view>
+      <ui-view style="color:#b4b4b4;font-size:10px;width:90px;background:#f3f3f3;margin:0 auto;text-align:center;margin-top:-10px "> 其 他 登 录 方 式 </ui-view>
+    </ui-view>
+    <ui-view style="padding:0 0.4rem;display:flex;flex-wrap:nowrap;justify-content:space-around;">
+      <ui-icon type="weixin---" size="60" color="#65c551" style="padding:0.6rem 5%"></ui-icon>
+      <ui-icon type="qq" size="60" color="#62acf8" style="padding:0.6rem 5%"></ui-icon>
+      <ui-icon type="weibo" size="60" color="#eb7470" style="padding:0.6rem 5%"></ui-icon>
+    </ui-view>
+    <ui-view style="position:absolute;bottom:10px;width:100%;text-align:center">使用即为同意《虎牙服务协议》<ui-view>
+  </ui-page>
+  
+</template>
+
+<script>
+export default {
+  config: {
+    'navigationBarTitleText': "登录",
+    "backgroundColor":"#f3f3f3"
+  },
+  data() {
+    return {
+      username:'',
+      password:'',
+      Ulen:0,
+      Plen:0,
+    }
+  },
+  methods: {
+    goRegistered(){
+      ui.navigateTo({
+        url: '/component/mine/registered'
+      })
+    },
+    formSubmit (e) {
+      ui.request({
+        url: '/login/',
+        method: 'POST',
+        data: e,
+        header: { 'content-type': "application/x-www-form-urlencoded" },
+        success: function (res) {
+          if(res.data["status"]===0){
+            ui.showToast({ title: res.data['Msg'], icon: 'mima', duration: 3000 })
+          }
+          if(res.data["status"]===1){
+            ui.showToast({ title: res.data['Msg'], icon: 'success', duration: 3000 })
+            ui.redirectTo({
+              url: '/pages/user'
+            })
+          }
+        },
+        error: function (res) {
+          console.log('错误信息'+res.data)
+        }
+      })
+    },
+  },
+  mounted() { 
+    
+  },
+  watch:{
+    username:function(){
+      this.Ulen = this.username.replace(/(^\s*)|(\s*$)/g, "").length;
+      return this.Ulen;
+    },
+    password:function(){
+       this.Plen = this.password.replace(/(^\s*)|(\s*$)/g, "").length;
+       return this.Ulen; 
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.ui-button.is-disabled, .ui-button.is-disabled:hover, .ui-button.is-disabled:focus{
+  opacity: 0.5;
+}
+
+</style>

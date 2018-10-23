@@ -1,0 +1,23 @@
+<template>
+    <ui-page>
+
+    </ui-page>
+  </template>
+
+
+
+  <script>
+
+  export default {
+  
+ 
+
+}
+  </script>
+
+  <style lang="less" scoped>
+
+  
+
+  
+  </style>

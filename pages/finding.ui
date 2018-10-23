@@ -1,0 +1,47 @@
+<template>
+  <ui-page>
+    <ui-view class="page-body">
+      <ui-view class="page-body-wording">发现页</ui-view>
+      <ui-view class="btn-area">
+        <ui-button bindtap="makeRequest" type="primary">发现页面测试ajax</ui-button>
+      </ui-view>
+    </ui-view>
+  </ui-page>
+</template>
+
+<script>
+  
+const requestUrl = 'ajax'
+export default {
+  config: {
+    navigationBarTitleText: 'finding',
+    backgroundColor: '#F4F4F4',
+    navigationBarTextStyle: 'black',
+  },
+  data () {
+    return{
+    }
+  },
+  methods: {
+   makeRequest(){
+      ui.request({
+        url: 'finding/ajaxTest',
+        data: {
+          x: 'abx',
+          y: 'xyz'
+        },
+        success: function (result) {
+          console.log(result.data)
+        },
+        fail: function ({ errMsg }) {
+          console.log('错误信息'+errMsg)
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="less">
+
+</style>
