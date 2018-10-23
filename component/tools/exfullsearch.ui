@@ -2,7 +2,7 @@
 <template>
   <ui-view style="padding:5px 0.4rem;">
     <ui-view style="position:relative;">
-      <ui-button bindtap="showFullScreenSearch" icon="sousuo" style="border:none;background:#ececec;height:35px;line-height:35px">放肆玩乐，轻巧办公</ui-button>
+      <ui-button bindtap="showFullScreenSearch" icon="sousuo" style="border:none;background:#ececec;height:35px;line-height:35px">放肆玩乐, 轻巧办公</ui-button>
       <ui-icon type="saoyisao" style="border-radius:5px;position:absolute;top:11px;right:10px;color:#171717" size="16"></ui-icon>
     </ui-view>
     <ui-view>
