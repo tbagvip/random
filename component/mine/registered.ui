@@ -1,4 +1,3 @@
-<!--undefined-->
 <template>
   <ui-page>
     <ui-view>
@@ -19,13 +18,14 @@
           <ui-icon type="yanzhengma" size="22"></ui-icon>
           <ui-input bindfocus="handleFocus1" bindblur="handleBlur1" style="border:none;padding:0;margin:6px 2px;overflow:hidden;" name="codevalue" ui:model="{{codevalue}}"
                           :disabled="!(/^1[34578]\d{9}$/.test(this.telvalue))? true:false" :placeholder="isClear1? '':'请输入验证码' " maxlength="4"></ui-input>
-          <ui-button bindtap="getverifycode" :disabled="!(/^1[34578]\d{9}$/.test(this.telvalue))? true:false" type="primary" size="mini">获取验证码</ui-button>
+          <!-- <ui-button :disabled="!(/^1[34578]\d{9}$/.test(this.telvalue))? true:false" type="primary" size="mini">获取验证码</ui-button> -->
+          <ui-button disabled type="primary" size="mini">获取验证码</ui-button>
         </ui-view>
 
          <!-- 验证码图片 -->
          <ui-view style="display:flex;align-items:center;height:36px;background:pink">
-          <ui-image src="/verifycode/"></ui-image>
-          <ui-text style="margin-left:10px" bindtap="getverifycode">换一张</ui-text>
+          <ui-image src="/verifycode/" ref="verifycode"></ui-image>
+          <ui-text style="margin-left:10px" bindtap="updataverifycode">换一张</ui-text>
          </ui-view>
 
         <ui-button form-type="submit" type="primary" style="margin:20px auto;background:##f2a63a;color:#fff"
@@ -40,8 +40,6 @@
 <script>
 
 export default {
-  components:{
-  },
   config: {
     navigationBarTitleText: "手机号码注册",
   },
@@ -82,10 +80,8 @@ export default {
         this.isClear1 = false
       }
     },
-    getverifycode(){
-      ui.navigateTo({
-        url: '/component/mine/registered'
-      })
+    updataverifycode(){
+      this.$refs.verifycode.src += '?'
     },
     goLogin(){
       ui.navigateTo({
